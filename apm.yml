@@ -1,0 +1,6 @@
+name: ckw-design-ux
+version: 0.1.0
+description: APM distribution of the selected upstream UX skill.
+type: skill
+includes:
+  - deterministic-design/design-ux

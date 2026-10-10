@@ -1,6 +1,6 @@
 ---
 name: design-ux
-description: UX / usability audit — heuristic evaluation of INTERACTIVE UIs (not just visual polish). Load with design when a UI "feels off", "sucks to use", is hard to learn, needs an instruction wall, or before shipping an interactive tool/editor/app. Scores the RENDERED UI against Nielsen's 10 + interaction heuristics via a SEPARATE fresh-eyes judge and returns a prioritized, severity-ranked fix list. Usability ≠ aesthetics — a beautiful UI can still be unusable; this audits the interaction.
+description: UX / usability audit — heuristic evaluation of INTERACTIVE UIs (not just visual polish). Use when a UI "feels off", "sucks to use", is hard to learn, needs an instruction wall, or before shipping an interactive tool/editor/app. Scores the RENDERED UI against Nielsen's 10 + interaction heuristics via a SEPARATE fresh-eyes judge and returns a prioritized, severity-ranked fix list. Usability ≠ aesthetics — a beautiful UI can still be unusable; this audits the interaction.
 author: Conner K Ward
 ---
 
@@ -8,14 +8,14 @@ author: Conner K Ward
 
 Usability ≠ aesthetics. design-system/design-spatial make it *look* right; this checks whether a first-timer can do the task **without being told how**. Use it whenever a UI "sucks to use," needs a paragraph of instructions, or before shipping anything interactive.
 
-## Rule 0 — fresh eyes, on the rendered artifact (inherited from design-spatial §1)
+## Rule 0 — fresh eyes, on the rendered artifact
 
 **Never self-grade.** The builder rationalizes its own UI. Render the *live* UI in its **default first-load state** (not a hand-arranged screenshot), capture an **interaction trace** of the primary task, and have a **separate judge** (a subagent/VLM that did NOT build it) score it. A described list of changes is not an audit — the audit is a fresh judge hunting for what's *wrong* on the real screen.
 
 ## The procedure
 
 1. **Name the primary task(s)** the UI exists for (e.g. "trim a clip and set its speed, then export"). The audit is relative to these, not to abstract prettiness.
-2. **Render default state + trace the task.** Screenshot the first-load UI (wide AND narrow — overflow gate from design-spatial §2). Then actually perform the primary task and screenshot each step.
+2. **Render default state + trace the task.** Screenshot the first-load UI (wide AND narrow; check for horizontal overflow, clipped controls, and unreachable actions). Then actually perform the primary task and screenshot each step.
 3. **Score every heuristic** (table below) on the artifact: pass / violation, **severity** (blocker / major / minor), a *specifically located* finding, and a concrete fix. Separate judge does this.
 4. **Prioritize**: blockers → majors → minors; cluster fixes that touch the same surface.
 5. **Fix, then RE-RENDER and RE-SCORE.** Do not claim fixed without re-auditing the new artifact (verify-outputs-rule).
@@ -51,7 +51,9 @@ Usability ≠ aesthetics. design-system/design-spatial make it *look* right; thi
 
 A scored table — `Heuristic | Finding (located) | Severity | Fix` — then a prioritized fix list (blockers first). Severity: **blocker** = can't complete the task / actively misleading; **major** = slows or confuses; **minor** = polish.
 
-## Relation to the rest of design
+## Optional companion skills
+
+This skill is standalone: the procedure and heuristic table above provide all required operating guidance. The following companion skills are optional background, not installation prerequisites.
 
 - **design-spatial** owns the render-then-critique mechanism + Fitts/transit + overflow gate; this skill applies that lens to *usability* specifically and adds the heuristic scorecard.
 - **design-thinking** owns the UX *principles* (goals/tasks, IA, feedback, accessibility, progressive disclosure); this skill turns them into a *scored audit + fix loop*.
